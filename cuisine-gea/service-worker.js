@@ -1,7 +1,7 @@
 /* GEAP — un cache par portée et par version. */
 'use strict';
 const PREFIX='geap-'+"a0a62e43"+'-'+(()=>{let h=0;for(const c of self.registration.scope)h=(Math.imul(31,h)+c.charCodeAt(0))|0;return(h>>>0).toString(16);})()+'-';
-const CACHE=PREFIX+"v_2c4bd20350614b228542";
+const CACHE=PREFIX+"v_72ec8504b10a411f97bc";
 const ASSETS=['./','./index.html','./app.css','./core.js','./runtime.js','./app.js','./manifest.webmanifest','./project.geap.json','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/maskable-512.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS))));
 self.addEventListener('message',event=>{if(event.data==='ACTIVATE')self.skipWaiting();});

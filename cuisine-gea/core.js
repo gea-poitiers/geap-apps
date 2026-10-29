@@ -74,7 +74,22 @@ async function readMediaFiles(files,kind){const list=Array.from(files||[]);if(li
 return {NUMERIC,COLLECTION_TYPES:COLLECTIONS,ARRAY_TYPES,MAX_FILE,MAX_MEDIA,FILE_TYPES,castAdvanced,displayAdvanced,effectiveType,resultType,location,safeFile,imageItems,calculationOrder,dependencies,calculate,refreshAdvanced,validateAdvanced,choiceValues,formValue,initialValue,localDateTime,contactURL,richHTML,sourceRecords,filterRows,validTileURL,readMediaFiles,scalarType,distance,resolvedField};
 });
 
-/* GEAP Core 1.0 — modèle déclaratif et intégrité, sans dépendance. */
+/* GEAP — dispositions déterministes, communes aux anciens et nouveaux projets. */
+(function(g,f){if(typeof module!=='undefined'&&module.exports)module.exports=f;else g.GEAPResponsiveCore=f;})(typeof window!=='undefined'?window:globalThis,function(C){
+'use strict';
+const FORMATS=['phone','tablet','desktop'],LABELS={phone:'Smartphone',tablet:'Tablette',desktop:'Ordinateur'},BREAKPOINTS={tablet:640,desktop:1024};
+const KEYS=['columns','fieldColumns','sectionColumns','maxWidth','align','gap','imageSize','navigation','visible'];
+function breakpoints(p){return {...BREAKPOINTS,...p.responsive?.breakpoints};}
+function format(width,p={}){const b=breakpoints(p);return width<b.tablet?'phone':width<b.desktop?'tablet':'desktop';}
+function defaults(kind,device){const i=FORMATS.indexOf(device),gallery=kind==='gallery',tiles=kind==='tiles';return {columns:(gallery?[2,3,5]:tiles?[2,3,4]:kind==='cards'?[1,2,4]:[1,1,1])[i],fieldColumns:[1,2,2][i],sectionColumns:[1,2,2][i],maxWidth:1200,align:'center',gap:[12,16,20][i],imageSize:'medium',navigation:['bottom','top','side'][i],visible:true};}
+function overrides(config,device){return config?.mode==='custom'?config.overrides?.[device]||{}:{};}
+function resolve(p,screen,component,device,kind){return {...defaults(kind||screen?.type||'home',device),...overrides(screen?.responsive,device),...overrides(component?.responsive,device)};}
+function validateConfig(config,label){const errors=[];if(config===undefined)return errors;if(!config||typeof config!=='object'||Array.isArray(config)||!['auto','custom'].includes(config.mode))return [label+' : disposition responsive invalide.'];if(config.overrides!==undefined&&(!config.overrides||typeof config.overrides!=='object'||Array.isArray(config.overrides)))return [label+' : formats responsive invalides.'];for(const [device,props]of Object.entries(config.overrides||{})){if(!FORMATS.includes(device)||!props||typeof props!=='object'||Array.isArray(props)){errors.push(label+' : format responsive inconnu.');continue;}for(const [key,value]of Object.entries(props)){let ok=KEYS.includes(key);if(['columns','fieldColumns','sectionColumns'].includes(key))ok=Number.isInteger(value)&&value>=1&&value<=(key==='columns'?6:3);if(key==='maxWidth')ok=Number.isInteger(value)&&value>=240&&value<=2400;if(key==='gap')ok=Number.isInteger(value)&&value>=0&&value<=48;if(key==='align')ok=['start','center','end','stretch'].includes(value);if(key==='imageSize')ok=['small','medium','large'].includes(value);if(key==='navigation')ok=['auto','bottom','top','side'].includes(value);if(key==='visible')ok=typeof value==='boolean';if(!ok)errors.push(label+' : propriété responsive invalide ('+key+').');}}return errors;}
+function validate(p){const errors=[];if(p.responsive!==undefined&&(!p.responsive||typeof p.responsive!=='object'||Array.isArray(p.responsive)))errors.push('Configuration responsive du projet invalide.');if(p.responsive?.breakpoints!==undefined&&(!p.responsive.breakpoints||typeof p.responsive.breakpoints!=='object'||Array.isArray(p.responsive.breakpoints)))errors.push('Points de rupture responsive invalides.');if(p.responsive!==undefined){const b=breakpoints(p);if(!Number.isInteger(b.tablet)||!Number.isInteger(b.desktop)||b.tablet<480||b.desktop<=b.tablet||b.desktop>2400)errors.push('Points de rupture responsive invalides.');}for(const s of p.screens||[]){errors.push(...validateConfig(s.responsive,s.name));for(const c of s.components||[])errors.push(...validateConfig(c.responsive,s.name+' / composant'));}return errors;}
+return {FORMATS,LABELS,BREAKPOINTS,KEYS,breakpoints,format,defaults,overrides,resolve,validateConfig,validate};
+});
+
+/* GEAP Core 1.4 — modèle déclaratif et intégrité, sans dépendance. */
 (function(global){
 'use strict';
 const TYPES=['text','url','integer','decimal','date','boolean','image','reference','array','relation','email','phone','datetime','time','duration','location','multiselect','images','files','richtext','computed'];
@@ -237,7 +252,7 @@ function validate(p){
  if(p.theme?.font!==undefined)check(Object.hasOwn(FONTS,p.theme.font),'Police de caractères non prise en charge.');
  if(p.theme?.preset!==undefined)check(Object.hasOwn(THEMES,p.theme.preset),'Thème de présentation absent.');
  if(p.theme?.iconData)check(safeImage(p.theme.iconData),'Icône invalide.');
- if(api.validateAdvanced)errors.push(...api.validateAdvanced(p));return [...new Set(errors)];
+ if(api.validateAdvanced)errors.push(...api.validateAdvanced(p));if(api.Responsive)errors.push(...api.Responsive.validate(p));return [...new Set(errors)];
 }
 function assert(p){const es=validate(p);if(es.length)fail(es.slice(0,8).join('\n'));return p;}
 function normalise(p){
@@ -277,6 +292,100 @@ function exportCSV(p,tid){const t=table(p,tid),cell=v=>'"'+String(v??'').replace
 function blank(n='Mon application'){return {format:'GEAP',version:1,id:uid('project'),name:n,description:'Une application créée avec GEAP.',theme:{primary:'#177b69'},tables:[],relations:[],screens:[],actions:[],homeScreenId:''};}
 const api={THEMES,FONTS,appearance,contrast,onColor,computed,safeURL,imageSource,navPosition,relationSource,relationTarget,relationRows,refreshComputed,addMatchRelation,removeMatchRelation,TYPES,SCREEN_TYPES,ACTION_TYPES,COMPONENT_TYPES,OPS,clone,uid,slug,esc,key,empty,safeImage,table,field,pk,screen,cast,valueFor,label,display,validate,assert,normalise,transact,nextKey,writeRow,removeRow,addTable,addField,deleteField,removeTable,match,records,parseCSV,importCSV,exportCSV,blank};
 const advancedFactory=typeof module!=='undefined'&&module.exports?require('./core-advanced.js'):global.GEAPAdvancedCore;if(advancedFactory)Object.assign(api,advancedFactory(api));
+const responsiveFactory=typeof module!=='undefined'&&module.exports?require('./responsive-core.js'):global.GEAPResponsiveCore;if(responsiveFactory)api.Responsive=responsiveFactory(api);
 global.GEAPCore=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
+
+/* GEAP — adaptateurs physiques locaux. Aucun écran ne dépend d’IndexedDB. */
+(function(g,factory){const api=factory(g.GEAPCore||(typeof require==='function'?require('./core.js'):null),g);g.GEAPStorage=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;})(typeof window!=='undefined'?window:globalThis,function(C,env){
+'use strict';
+class DataError extends Error{
+ constructor(kind,code,message,cause){super(message);this.name='GEAPDataError';this.kind=kind;this.code=code;if(cause)this.cause=cause;}
+}
+const clone=v=>v===undefined?undefined:C.clone(v);
+const asError=(e,kind='storage',code='STORAGE_FAILURE')=>e instanceof DataError?e:new DataError(kind,code,e?.name==='QuotaExceededError'?'Espace de stockage insuffisant. Exportez une sauvegarde de vos données.':e?.message||'Stockage local indisponible.',e);
+class MemoryAdapter{
+ constructor(state){this.kind='memory';this.capabilities={local:true,atomicSnapshot:true,persistent:false};this._state=clone(state);}
+ async load(){return clone(this._state);}
+ async save(state,{expectedRevision}={}){const revision=Number(this._state?.revision)||0;if(expectedRevision!==undefined&&expectedRevision!==revision)throw new DataError('conflict','STALE_REVISION','Les données ont changé. Rechargez avant de poursuivre.');this._state={...clone(state),revision:revision+1};return clone(this._state);}
+ replacePreview(state){this._state=clone(state);}
+ subscribeExternal(){return ()=>{};}
+ async close(){}
+}
+class IndexedDBAdapter{
+ constructor({projectId,path,databaseName,indexedDB,broadcast=true}={}){this.kind='indexeddb';this.capabilities={local:true,atomicSnapshot:true,persistent:true};this.name=databaseName||'geap-'+projectId+'-'+(path??new URL('.',env.location.href).pathname);this._idb=indexedDB||env.indexedDB;this._listeners=new Set();this._broadcast=broadcast;}
+ async open(){
+  if(this._db)return this._db;if(this._opening)return this._opening;
+  this._opening=new Promise((resolve,reject)=>{if(!this._idb){reject(new DataError('storage','STORAGE_UNAVAILABLE','IndexedDB est indisponible dans ce navigateur.'));return;}let settled=false,req;
+   try{req=this._idb.open(this.name,1);}catch(e){reject(asError(e));return;}
+   // Identité historique conservée : version 1, magasin state, clé data.
+   req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('state'))req.result.createObjectStore('state');};
+   req.onsuccess=()=>{if(settled){req.result.close();return;}settled=true;this._db=req.result;this._db.onversionchange=()=>{this._db?.close();this._db=null;this._opening=null;this._notify({type:'external'});};
+    if(this._broadcast&&env.document&&env.BroadcastChannel){this._channel=new env.BroadcastChannel(this.name);this._channel.onmessage=()=>this._notify({type:'external'});}resolve(this._db);};
+   req.onerror=()=>{if(!settled){settled=true;reject(asError(req.error));}};
+   req.onblocked=()=>{if(!settled){settled=true;reject(new DataError('storage','STORAGE_BLOCKED','La base est bloquée par un autre onglet. Fermez cet onglet puis réessayez.'));}};
+  });return this._opening;
+ }
+ async load(){const db=await this.open();return new Promise((resolve,reject)=>{let value,tx;try{tx=db.transaction('state','readonly');const req=tx.objectStore('state').get('data');req.onsuccess=()=>value=req.result;tx.oncomplete=()=>resolve(clone(value));tx.onabort=tx.onerror=()=>reject(asError(tx.error));}catch(e){reject(asError(e));}});}
+ async save(state,{expectedRevision}={}){const db=await this.open(),input=clone(state);return new Promise((resolve,reject)=>{let tx,next,error;try{tx=db.transaction('state','readwrite');const store=tx.objectStore('state'),req=store.get('data');req.onsuccess=()=>{const current=req.result,revision=Number(current?.revision)||0;if(expectedRevision!==undefined&&revision!==expectedRevision||current&&current.projectId!==input.projectId){error=new DataError('conflict','STALE_REVISION','Les données ont changé dans un autre onglet. Rechargez avant de modifier.');tx.abort();return;}next={...input,revision:revision+1};store.put(next,'data');};
+    tx.oncomplete=()=>{this._channel?.postMessage('changed');resolve(clone(next));};tx.onerror=()=>{error??=asError(tx.error);};tx.onabort=()=>reject(error||asError(tx.error));
+   }catch(e){reject(asError(e));}});}
+ _notify(event){for(const fn of this._listeners)try{fn(event);}catch{}}
+ subscribeExternal(fn){this._listeners.add(fn);return ()=>this._listeners.delete(fn);}
+ async close(){this._channel?.close();this._channel=null;this._db?.close();this._db=null;this._opening=null;this._listeners.clear();}
+}
+return {DataError,asError,MemoryAdapter,IndexedDBAdapter};
+});
+
+/* GEAP — services de données, invariants et notifications, indépendants du stockage. */
+(function(g,factory){const api=factory(g.GEAPCore||(typeof require==='function'?require('./core.js'):null),g.GEAPStorage||(typeof require==='function'?require('./storage-local.js'):null));g.GEAPData=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;})(typeof window!=='undefined'?window:globalThis,function(C,S){
+'use strict';const {DataError,asError}=S;
+const signature=p=>JSON.stringify(p.tables.map(t=>({id:t.id,fields:t.fields})));
+const schema=p=>({format:'GEAP_SCHEMA',version:1,projectId:p.id,tables:p.tables.map(t=>({id:t.id,name:t.name,fields:C.clone(t.fields)})),relations:C.clone(p.relations)});
+const snapshot=(p,revision=0)=>({format:'GEAP_DATA',version:1,projectId:p.id,modelSignature:signature(p),tables:p.tables.map(t=>({id:t.id,rows:C.clone(t.rows)})),revision});
+function fromSnapshot(seed,state){
+ if(!state||state.format!=='GEAP_DATA'||state.version!==1||state.projectId!==seed.id||state.modelSignature!==signature(seed))throw new DataError('validation','SCHEMA_MISMATCH','Cette sauvegarde ne correspond pas au modèle de cette application.');
+ if(!Array.isArray(state.tables)||state.tables.length!==seed.tables.length||new Set(state.tables.map(t=>t?.id)).size!==seed.tables.length||state.tables.some(t=>!C.table(seed,t?.id)||!Array.isArray(t.rows)))throw new DataError('validation','INVALID_BACKUP','Les tables de la sauvegarde sont incomplètes ou dupliquées.');
+ try{return C.normalise({...seed,tables:seed.tables.map(t=>({...t,rows:state.tables.find(x=>x.id===t.id).rows}))});}catch(e){throw asError(e,'validation','INVALID_DATA');}
+}
+class DataEngine{
+ constructor(project,{adapter,preview=false}={}){
+  try{this._project=C.normalise(project);}catch(e){throw asError(e,'validation','INVALID_MODEL');}this._seed=C.clone(this._project);this.adapter=adapter||new S.MemoryAdapter();this.isPreview=preview;this._revision=0;this._listeners=new Set();this._queue=Promise.resolve();this._external=false;this._state='opening';
+  this._unwatch=this.adapter.subscribeExternal?.(()=>{this._external=true;this._emit({type:'external'});});
+  if(preview){this.adapter.replacePreview(snapshot(this._project));this._state='ready';this.ready=Promise.resolve(this);}else{this.ready=this._open();this.ready.catch(()=>{});}
+ }
+ async _open(){try{const stored=await this.adapter.load();if(stored!==undefined&&stored!==null){try{this._project=fromSnapshot(this._seed,stored);}catch(e){e.storedState=C.clone(stored);throw e;}this._revision=Number(stored.revision)||0;}this._state='ready';this._emit({type:'load'});return this;}catch(e){this._state='blocked';this.error=asError(e);throw this.error;}}
+ get status(){return this._state;}
+ project(){return C.clone(this._project);}
+ get modelSignature(){return signature(this._project);}
+ subscribe(fn){this._listeners.add(fn);return ()=>this._listeners.delete(fn);}
+ _emit(event){for(const fn of this._listeners)try{fn({...event,revision:this._revision});}catch{}}
+ _table(id){const t=C.table(this._project,id);if(!t)throw new DataError('validation','TABLE_NOT_FOUND','Table introuvable.');return t;}
+ // Projection de lecture déjà chargée. Les rendus ne contactent jamais l’adaptateur.
+ records(tableId,options={}){const t=this._table(tableId);let rows=C.filterRows(this._project,t,t.rows,{filters:options.filters||[],sort:options.sort});if(options.offset)rows=rows.slice(options.offset);if(options.limit!==undefined)rows=rows.slice(0,options.limit);return rows;}
+ record(tableId,id){if(!tableId)return null;const t=this._table(tableId);return t.rows.find(r=>C.key(r[C.pk(t).id])===C.key(id))||null;}
+ screenRecords(screen,context={},extra=[]){return C.records(this._project,screen,context,extra);}
+ sourceRecords(config,screen,row){return C.sourceRecords(this._project,config,screen,row);}
+ relatedRecords(relationId,tableId,row){const rel=this._project.relations.find(r=>r.id===relationId);if(!rel)throw new DataError('validation','RELATION_NOT_FOUND','Relation introuvable.');return C.relationRows(this._project,rel,tableId,row);}
+ choices(field,config={}){return C.choiceValues(this._project,field,config);}
+ async getSchema(){await this.ready;return schema(this._project);}
+ async getRecords(tableId,options={}){await this.ready;return C.clone(this.records(tableId,options));}
+ async getRecord(tableId,id){await this.ready;return C.clone(this.record(tableId,id));}
+ async queryRecords(tableId,filters=[],sort,options={}){return this.getRecords(tableId,{...options,filters,sort});}
+ async getRelatedRecords(relationId,tableId,id){await this.ready;const row=this.record(tableId,id);if(!row)throw new DataError('validation','RECORD_NOT_FOUND','Enregistrement introuvable.');return C.clone(this.relatedRecords(relationId,tableId,row));}
+ _enqueue(change,{type='commit'}={}){const task=this._queue.then(async()=>{await this.ready;if(this._state==='closed')throw new DataError('connection','ENGINE_CLOSED','Le service de données est fermé.');if(this._external)throw new DataError('conflict','EXTERNAL_CHANGE','Les données ont changé dans un autre onglet. Rechargez la page avant de modifier.');let q;try{q=change(this._project);C.assert(q);}catch(e){throw asError(e,'validation','INVALID_DATA');}const state=await this.adapter.save(snapshot(q,this._revision),{expectedRevision:this._revision}).catch(e=>{throw asError(e);});this._project=q;this._revision=Number(state?.revision)||this._revision+1;this._emit({type});return this.project();});this._queue=task.catch(()=>{});return task;}
+ async createRecord(tableId,data){const q=await this._enqueue(p=>C.writeRow(p,tableId,null,data));const t=C.table(q,tableId);return C.clone(t.rows.at(-1));}
+ async updateRecord(tableId,id,patch){let newKey;const q=await this._enqueue(p=>{const t=C.table(p,tableId),old=t?.rows.find(r=>C.key(r[C.pk(t).id])===C.key(id));if(!old)throw new DataError('validation','RECORD_NOT_FOUND','Enregistrement introuvable.');const values={...old,...patch};newKey=values[C.pk(t).id];return C.writeRow(p,tableId,id,values);});return C.clone(C.table(q,tableId).rows.find(r=>C.key(r[C.pk(C.table(q,tableId)).id])===C.key(newKey)));}
+ async deleteRecord(tableId,id){return this._enqueue(p=>{if(!this.record(tableId,id))throw new DataError('validation','RECORD_NOT_FOUND','Enregistrement introuvable.');return C.removeRow(p,tableId,id);});}
+ async replaceData(project){return this._enqueue(current=>{if(project.id!==current.id||signature(project)!==signature(current))throw new DataError('validation','SCHEMA_MISMATCH','Le remplacement des données exige un modèle identique.');return C.normalise({...current,tables:current.tables.map(t=>({...t,rows:C.table(project,t.id)?.rows||[]}))});});}
+ async exportData(){await this._queue;await this.ready;return snapshot(this._project,this._revision);}
+ async importData(state){await this.ready;const project=fromSnapshot(this._seed,state);return this.replaceData(project);}
+ updatePreview(project){if(!this.isPreview||this.adapter.kind!=='memory')throw new DataError('validation','PREVIEW_ONLY','Le modèle ne peut être changé que dans l’éditeur.');let q;try{q=C.normalise(project);}catch(e){throw asError(e,'validation','INVALID_MODEL');}this._project=q;this._seed=C.clone(q);this._revision=0;this.adapter.replacePreview(snapshot(q));this._external=false;this._emit({type:'presentation'});}
+ async resetAfterBackup({confirmed=false}={}){if(!confirmed||this.error?.code!=='SCHEMA_MISMATCH')throw new DataError('validation','EXPLICIT_RESET_REQUIRED','Exportez d’abord les anciennes données et confirmez la réinitialisation.');const old=this.error.storedState,revision=Number(old?.revision)||0;await this.adapter.save(snapshot(this._seed),{expectedRevision:revision});return true;}
+ async close(){await this._queue;this._unwatch?.();this._listeners.clear();await this.adapter.close();this._state='closed';}
+}
+const createPreview=project=>new DataEngine(project,{preview:true});
+const createLocal=(project,options={})=>new DataEngine(project,{adapter:new S.IndexedDBAdapter({projectId:project.id,...options})});
+return {DataEngine,DataError,MemoryAdapter:S.MemoryAdapter,IndexedDBAdapter:S.IndexedDBAdapter,createPreview,createLocal,signature,schema,snapshot,fromSnapshot};
+});
 
