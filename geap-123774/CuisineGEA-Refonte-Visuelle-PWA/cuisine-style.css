@@ -1,0 +1,156 @@
+/* Cuisine GEA — Edition visuelle 2026. 100 % locale, aucune police ni image distante. */
+:root{--c-forest:#284b3d;--c-deep:#20382f;--c-clay:#c16a45;--c-cream:#fbf8f3;--c-gold:#d8b27a;--c-ink:#273b31;--c-border:#e9e5dd}
+html,body{background:var(--c-cream)}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.gapp{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;font-size:14px;line-height:1.55}
+.gapp .app-head{padding:13px clamp(18px,3.4vw,36px)!important;background:#fffefd;box-shadow:0 1px 10px #12251805;border-bottom:1px solid #eee9e2;min-height:76px}
+.gapp .app-head .app-mark{background:#992b14 url('assets/icone.png') center/cover no-repeat!important;color:transparent!important;width:44px;height:44px;border-radius:14px;box-shadow:0 3px 9px #281b1816}
+.gapp .app-head h1{font-weight:750;letter-spacing:-.035em;font-size:20px;color:var(--c-forest)}
+.gapp .app-back{width:40px;height:40px;border-radius:12px;box-shadow:0 1px 5px #00000008}
+.gapp .app-body{background:linear-gradient(180deg,#fffcf6 0%,#fbf8f3 320px);scrollbar-color:#d9ccbb transparent}
+.gapp .app-content{max-width:1150px!important}
+.gapp .app-content > h2,.gapp .app-component-grid h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.035em}
+.gapp .app-content > h2{font-size:clamp(28px,3.2vw,42px);line-height:1.16;margin:0 0 8px;color:var(--c-deep)}
+.gapp .app-kicker,.gapp .cuisine-eyebrow{color:var(--c-clay);font-weight:800;font-size:10px;letter-spacing:.19em;text-transform:uppercase}
+.gapp .app-sub{color:#788176;font-size:13px;line-height:1.65}
+.gapp .app-preferences{background:#fffefa;border:1px solid #eee7dd;border-radius:18px;box-shadow:0 5px 25px #1c382b08;padding:13px 16px;margin-bottom:22px;display:flex;flex-wrap:wrap;column-gap:16px;row-gap:6px;align-items:center}
+.gapp .app-preferences:before{content:'AFFINER';font-size:10px;font-weight:800;color:var(--c-clay);letter-spacing:.14em;margin-right:2px}
+.gapp .app-preferences .app-toggle-line{margin:0;gap:9px;border:0!important;padding:6px 8px!important;background:#f8f5ee;border-radius:40px;min-height:35px}
+.gapp .app-preferences .app-toggle-line>span{font-size:11px;font-weight:650;color:#40564a}
+.gapp .app-preferences .app-toggle{flex-shrink:0}
+.gapp .app-preferences .app-filter-active{color:#9c5d3d;font-size:10px}
+.gapp .app-menu{background:#fffefc;box-shadow:0 -5px 22px #2b413012;border-top:1px solid #ede6dc;padding:9px 8px max(10px,env(safe-area-inset-bottom));gap:7px}
+.gapp .app-menu button{font-size:11px;min-width:67px;border-radius:13px;padding:10px 9px;color:#747e74;font-weight:620;transition:background .15s,color .15s}
+.gapp .app-menu button.active{background:#eaf0e9;color:var(--c-forest)}
+.gapp .app-menu i{font-size:20px}
+.gapp button:focus-visible,.gapp a:focus-visible{outline:3px solid #bd8659!important;outline-offset:3px!important}
+.gapp .app-btn,.gapp .app-actions .app-btn{min-height:44px;border-radius:12px;padding:11px 19px;font-weight:720;box-shadow:0 4px 10px #25473410;transition:transform .15s,background .15s}
+.gapp .app-btn:not(:disabled):active{transform:scale(.98)}
+.gapp .app-btn.secondary{box-shadow:none;background:#fffdf9;border-color:#e6ddce}
+.gapp .app-actions{margin:17px 0 20px}
+.gapp .app-search,.gapp .app-field input:not([type=checkbox]),.gapp .app-field textarea,.gapp .app-field select{border:1px solid #e5ded4;background:#fff!important;border-radius:13px;min-height:48px;box-shadow:0 3px 14px #213b2d06}
+.gapp .app-search{width:100%;max-width:580px;padding:13px 17px 13px 45px;background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%237b8177" stroke-width="2"%3E%3Ccircle cx="11" cy="11" r="7"/%3E%3Cpath d="m20 20-4-4"/%3E%3C/svg%3E')!important;background-repeat:no-repeat!important;background-position:14px center!important;background-size:19px!important}
+/* Accueil immersif et identité culinaire */
+.gapp .cuisine-home-hero{min-height:365px;border-radius:25px;margin:0 0 33px;padding:clamp(28px,5vw,56px);background:linear-gradient(90deg,rgba(13,28,29,.82) 0%,rgba(13,28,29,.62) 40%,rgba(18,24,21,.01) 89%),url('assets/accueil.jpg') center/cover no-repeat;color:#fff;display:flex;align-items:center;position:relative;overflow:hidden;box-shadow:0 16px 45px #21352c22}
+.gapp .cuisine-home-hero:after{display:none}
+.gapp .cuisine-hero-inner{position:relative;z-index:1;max-width:570px}
+.gapp .cuisine-overline{font-size:11px;font-weight:770;letter-spacing:.20em;color:#f4e3bc;margin:0 0 21px}
+.gapp .cuisine-spark{font-size:16px;vertical-align:middle;color:#f0c28a}
+.gapp .cuisine-home-hero h2{font:normal clamp(36px,4.9vw,61px)/1.08 Georgia,'Times New Roman',serif;letter-spacing:-.035em;max-width:650px;margin:0;color:#fff}
+.gapp .cuisine-home-hero h2 em{color:#f3d9ad;font-style:italic}
+.gapp .cuisine-home-hero p{max-width:445px;font-size:14px;line-height:1.8;color:#fff4e7;margin:19px 0 24px}
+.gapp .cuisine-primary-cta{display:inline-flex;align-items:center;gap:25px;background:#c36b43;color:#fff;border:1px solid #d27e57;padding:13px 18px;border-radius:11px;font-weight:720;box-shadow:0 7px 19px #0002;min-height:47px}
+.gapp .cuisine-primary-cta span{font-size:20px}
+.gapp .cuisine-primary-cta:hover{background:#b45d36}
+.gapp .cuisine-hero-corner{position:absolute;right:20px;bottom:16px;font-size:9px;font-weight:750;letter-spacing:.19em;color:#f3e6d2a6}
+.gapp .cuisine-home-content{display:block;margin:0;max-width:1100px}
+.gapp .cuisine-home-content>.cuisine-welcome,.gapp .cuisine-home-content>.cuisine-editorial{margin:0 0 34px}
+.gapp .cuisine-section-heading{display:flex;align-items:end;justify-content:space-between;margin:0 0 18px;gap:12px}
+.gapp .cuisine-section-heading h3,.gapp .cuisine-editorial h3{font:normal clamp(25px,2.8vw,36px)/1.19 Georgia,'Times New Roman',serif;margin:7px 0 0;color:#253c30}
+.gapp .cuisine-handdrawn{color:#b79b73;font-size:27px}
+.gapp .cuisine-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.gapp .cuisine-shortcut{display:flex;align-items:center;gap:15px;padding:22px 17px;background:#fffefa;border:1px solid #ece6dc;border-radius:17px;text-align:left;box-shadow:0 6px 24px #18301d09;min-height:102px;transition:transform .15s,box-shadow .15s}
+.gapp .cuisine-shortcut:hover{transform:translateY(-3px);box-shadow:0 9px 30px #18301d16}
+.gapp .cuisine-shortcut.accent{border-color:#d9d0bd;background:#f4f3e8}
+.gapp .cuisine-shortcut-icon{font-size:24px;display:grid;place-items:center;background:#edf0e6;border-radius:14px;width:49px;height:49px;flex-shrink:0}
+.gapp .cuisine-shortcut.accent .cuisine-shortcut-icon{background:#e2e7d8}
+.gapp .cuisine-shortcut-text{display:grid;gap:4px;flex:1;min-width:0}
+.gapp .cuisine-shortcut-text strong{font-size:13px;color:#283f33;font-weight:750}
+.gapp .cuisine-shortcut-text small{font-size:11px;color:#85867b}
+.gapp .cuisine-shortcut-arrow{color:#a2a39a;font-size:18px}
+.gapp .cuisine-editorial{display:grid;grid-template-columns:1fr 1fr;min-height:280px;border-radius:22px;overflow:hidden;background:#eff0e8;border:1px solid #e9e8df}
+.gapp .cuisine-editorial-picture{background:url('assets/recette.jpg') center/cover;min-height:260px}
+.gapp .cuisine-editorial-copy{display:flex;flex-direction:column;align-items:start;justify-content:center;padding:clamp(24px,4vw,52px)}
+.gapp .cuisine-editorial-copy h3{margin:9px 0 12px;max-width:420px}
+.gapp .cuisine-editorial-copy h3 em{color:#af6746}
+.gapp .cuisine-editorial-copy p{font-size:13px;line-height:1.8;color:#66766a;max-width:400px;margin:0 0 21px}
+.gapp .cuisine-outline-cta{display:inline-flex;gap:15px;align-items:center;justify-content:space-between;background:var(--c-forest);color:#fff;border:0;border-radius:10px;padding:12px 17px;font-weight:700;min-height:45px}
+.gapp .cuisine-footnote{text-align:center;color:#a0a499;font-size:11px;margin:0 0 12px}
+/* Listes et cartes recettes */
+.gapp[data-cuisine-type="cards"] .app-cards{--layout-gap:20px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}
+.gapp[data-cuisine-type="cards"] .app-cards .app-row{position:relative;border:1px solid #e9e4db;border-radius:18px;padding:0;overflow:hidden;background:#fff;box-shadow:0 6px 23px #2a42250d;min-height:240px;transition:transform .18s,box-shadow .18s;text-align:left}
+.gapp[data-cuisine-type="cards"] .app-cards .app-row:hover{transform:translateY(-3px);box-shadow:0 16px 30px #24402d17}
+.gapp[data-cuisine-type="cards"] .app-cards .app-avatar{width:100%;height:clamp(145px,20vw,230px)!important;max-height:none;border:0;border-radius:0;object-fit:cover;background:#e7e4d9}
+.gapp[data-cuisine-type="cards"] .app-cards .app-row-content{padding:17px 18px 20px;width:100%}
+.gapp[data-cuisine-type="cards"] .app-cards .app-row-content strong{font:normal 22px/1.2 Georgia,'Times New Roman',serif;letter-spacing:-.015em;color:#283e32;display:block;margin:0 26px 5px 0}
+.gapp[data-cuisine-type="cards"] .app-cards .app-row-content small{font-size:11px;font-weight:650;color:#c1764b;margin:3px 0;line-height:1.4}
+.gapp[data-cuisine-type="cards"] .app-cards .app-arrow{right:18px;bottom:22px;font-size:24px;color:#9caa9f}
+.gapp .cuisine-card-flags{position:absolute;top:12px;left:12px;display:flex;flex-wrap:wrap;gap:6px}
+.gapp .cuisine-card-flags>span{font-size:10px;font-weight:750;letter-spacing:.01em;padding:6px 9px;background:#fffef4f5;color:#4b5546;border-radius:8px;box-shadow:0 3px 10px #0001}
+.gapp .cuisine-card-flags>span.is-done{background:#e3f0db;color:#35543b}
+/* Fiches detail : photo mise en avant, données en indicateurs, actions clairement séparées */
+.gapp .cuisine-recipe-title{font-size:clamp(28px,4vw,45px)!important;margin-bottom:14px!important}
+.gapp .cuisine-detail-photo{width:100%;border-radius:21px;overflow:hidden;background:#e9e4d9;margin:12px 0 15px;box-shadow:0 8px 28px #1e3a2e11}
+.gapp .cuisine-detail-photo .app-layout{width:100%!important;max-width:none!important;display:block}
+.gapp .cuisine-detail-photo .app-image{display:block;width:100%!important;max-width:none!important;height:clamp(220px,40vw,425px)!important;max-height:none!important;object-fit:cover;margin:0;border-radius:0}
+.gapp .cuisine-detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}
+.gapp .cuisine-detail-meta>span{background:#f3efe5;border-radius:30px;padding:7px 12px;font-size:11px;color:#65715f;font-weight:760}
+.gapp[data-cuisine-screen="recette_detail"] .app-detail{grid-template-columns:repeat(3,minmax(0,1fr))!important;background:transparent;border:0;overflow:visible;gap:11px;margin:0 0 25px}
+.gapp[data-cuisine-screen="recette_detail"] .app-detail>.app-attr{border:1px solid #e8e0d4;background:#fffefa;border-radius:15px;padding:17px 12px;box-shadow:0 5px 16px #12261906}
+.gapp[data-cuisine-screen="recette_detail"] .app-detail dt{font-size:10px;color:#858d7f;margin-bottom:5px}
+.gapp[data-cuisine-screen="recette_detail"] .app-detail dd{font-size:21px;line-height:1.25;font-weight:760;color:#2d4a3a}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0 16px}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout{background:#fffefa;border:1px solid #ede5da;border-radius:15px;padding:16px;max-width:100%;box-shadow:0 2px 14px #10251a04}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout:has(.app-separator){display:none}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout:has(.app-image){grid-column:span 2}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout:has(.app-text h2),.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout[data-full-width=true]{grid-column:1/-1}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout:has(.app-btn){background:transparent;box-shadow:none;border:0;padding:0}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components>.app-layout:has(.app-btn) button{width:100%;min-height:48px}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components .app-text{line-height:1.7}
+.gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components h3{font-size:24px}
+/* Formulaires en toile de fond sobre */
+.gapp .cuisine-form-content:before{content:'';display:block;width:100%;height:140px;background:linear-gradient(90deg,#eff0eabb,transparent),url('assets/formulaire.jpg') center 65%/cover;border-radius:20px;margin-bottom:22px}
+.gapp .app-form-grid{gap:17px!important}
+.gapp .app-form-grid .app-field{margin:0!important;background:#fffefa;border:1px solid #eee9df;border-radius:14px;padding:14px 15px;box-shadow:0 2px 8px #20362905}
+.gapp .app-form-grid .app-field>span{font-size:12px;color:#3d5144;margin-bottom:9px}
+.gapp .app-form-grid .app-field input:not([type=checkbox]),.gapp .app-form-grid .app-field textarea,.gapp .app-form-grid .app-field select{box-shadow:none}
+.gapp .app-dropdown summary{border-radius:12px}
+.pwa-toolbar{background:#e9efe8;border-bottom:1px solid #e0e5da;color:#516d5b;padding:7px 14px}
+.pwa-toolbar button{border:1px solid #d5ddcf;border-radius:9px;background:#fffef9;padding:7px 12px;color:#284b3d}
+.pwa-tools{background:#f8f9f4}
+@media(min-width:800px){
+  .gapp>.app-menu{order:1;border:0;border-bottom:1px solid #eae5d9;box-shadow:none;justify-content:flex-start;gap:7px;padding:8px clamp(24px,5vw,62px);background:#fffefd}
+  .gapp>.app-menu button{min-width:110px;max-width:none;display:flex;align-items:center;gap:7px;justify-content:center;font-size:12px;padding:8px 13px}
+  .gapp>.app-menu button i{display:inline-flex}
+  .gapp>.app-body{order:2;padding:26px clamp(23px,5vw,60px) 40px}
+}
+@media(max-width:799px){
+  .gapp .app-head{min-height:62px;padding:10px 16px!important}
+  .gapp .app-head .app-mark{width:37px;height:37px;border-radius:11px}
+  .gapp .app-head h1{font-size:17px}
+  .gapp .app-body{padding:14px!important}
+  .gapp .cuisine-home-hero{min-height:360px;padding:30px 23px;background:linear-gradient(90deg,#132523db 0%,#17261fd1 52%,#17261f35 100%),url('assets/accueil.jpg') 64% center/cover;border-radius:21px;margin-bottom:25px}
+  .gapp .cuisine-home-hero h2{font-size:clamp(35px,9.2vw,44px)}
+  .gapp .cuisine-home-hero p{font-size:13px;max-width:310px}
+  .gapp .cuisine-shortcuts{grid-template-columns:1fr;gap:10px}
+  .gapp .cuisine-shortcut{padding:13px 15px;min-height:73px}
+  .gapp .cuisine-editorial{grid-template-columns:1fr}
+  .gapp .cuisine-editorial-picture{min-height:170px}
+  .gapp .cuisine-editorial-copy{padding:23px 22px 27px}
+  .gapp .app-preferences{padding:10px 10px 12px;margin-bottom:18px;gap:5px}
+  .gapp .app-preferences:before{width:100%;padding:1px 6px}
+  .gapp .cuisine-detail-photo .app-image{height:230px!important}
+  .gapp .app-content>h2{font-size:30px}
+  .gapp .app-menu button{min-width:62px;padding:6px 5px}
+  .gapp[data-cuisine-type="cards"] .app-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .gapp[data-cuisine-type="cards"] .app-cards .app-avatar{height:135px!important}
+  .gapp[data-cuisine-type="cards"] .app-cards .app-row{min-height:192px}
+  .gapp[data-cuisine-type="cards"] .app-cards .app-row-content{padding:12px 11px 15px}
+  .gapp[data-cuisine-type="cards"] .app-cards .app-row-content strong{font-size:17px;line-height:1.2;margin-right:10px}
+  .gapp .cuisine-card-flags>span{font-size:9px;padding:5px 6px}
+  .gapp[data-cuisine-screen="recette_detail"] .app-detail dd{font-size:17px}
+  .gapp[data-cuisine-screen="recette_detail"] .cuisine-recipe-components{grid-template-columns:1fr}
+}
+@media(max-width:365px){
+ .gapp[data-cuisine-type="cards"] .app-cards{grid-template-columns:1fr}
+ .gapp[data-cuisine-type="cards"] .app-cards .app-avatar{height:190px!important}
+ .gapp[data-cuisine-screen="recette_detail"] .app-detail{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){.gapp .cuisine-shortcut,.gapp .app-cards .app-row{transition:none!important}}
+
+.gapp .cuisine-list-banner{height:90px;background:linear-gradient(90deg,#f3ebdd50,#fbf6e888),url('assets/liste.jpg') center/cover;display:flex;align-items:center;justify-content:center;border:1px solid #e9decd;border-radius:18px;margin:0 0 23px;overflow:hidden}
+.gapp .cuisine-list-banner span{font-size:10px;letter-spacing:.2em;font-weight:850;color:#67715b;background:#fffef0cd;padding:11px 19px;border:1px solid #f6f1e5;border-radius:50px;text-align:center}
+.gapp .cuisine-list-banner b{color:#bb8a49;padding:0 6px}
+.gapp .cuisine-secondary-detail .app-layout:has(.app-image){grid-column:1/-1;background:transparent}
+.gapp .cuisine-secondary-detail .app-image{width:100%;max-height:310px;object-fit:cover;border-radius:19px}
+.gapp .cuisine-secondary-detail .app-inline-collection{background:#fffdfa;padding:18px;border-radius:15px;border:1px solid #eee8de}
