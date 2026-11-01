@@ -1,0 +1,54 @@
+# GEAP-MOODLE-WORKFLOW: fichier gere par l importateur Moodle GEAP
+name: Publier GEAP (Pages)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Les publications GEAP ne s'executent pas simultanement.
+# En cas de pushes rapproches, une publication attend l'autre.
+concurrency:
+  group: pages-geap
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verifier et publier
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Recuperer la version courante du depot
+        uses: actions/checkout@v4
+
+      - name: Verifier la page d'accueil et les applications
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f index.html ]]; then
+            echo 'ERREUR : index.html absent a la racine du depot.' >&2
+            exit 1
+          fi
+          echo 'Page d accueil presente.'
+          echo 'Pages index.html trouvees :'
+          find . -maxdepth 5 -type f -name index.html -not -path './.git/*' -print | sort
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparer les fichiers statiques pour Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Publier sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
