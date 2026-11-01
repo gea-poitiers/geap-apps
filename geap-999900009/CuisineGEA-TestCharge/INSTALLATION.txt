@@ -1,0 +1,16 @@
+GEAP — Installation de l’application
+
+1. Décompressez l’archive dans un dossier. Gardez index.html à la racine.
+2. Publiez TOUT le dossier sur un hébergement HTTPS (Netlify Drop ou GitHub Pages).
+3. Ouvrez l’adresse HTTPS et attendez « Disponible hors ligne ».
+4. iPhone / iPad : Safari → Partager → Sur l’écran d’accueil → Ouvrir comme app Web (si proposé) → Ajouter.
+5. Android : Chrome → menu ⋮ → Installer l’application ou Ajouter à l’écran d’accueil.
+6. Fermez puis relancez l’application en mode avion pour vérifier le cache.
+
+Un fichier ouvert par double clic n’est pas une PWA installable.
+Chaque navigateur / appareil conserve ses propres données dans IndexedDB. Aucune synchronisation n’est effectuée. L’effacement des données du navigateur peut les supprimer. Utilisez « Données → Sauvegarder les données ».
+
+Mise à jour : republiez tous les fichiers exportés au même emplacement. L’application propose « Mise à jour disponible ». Validez ce bouton pour activer le nouveau cache. Les changements d’écrans et de présentation conservent les données. Un modèle de tables modifié bloque le chargement et propose d’exporter les anciennes données avant réinitialisation ; la migration automatique n’est pas incluse dans cette version.
+
+Fichiers : index.html, app.css, core.js, runtime.js, app.js, manifest.webmanifest, service-worker.js, project.geap.json, icons/.
+Le fichier project.geap.json permet de rouvrir le modèle dans GEAP. Il contient les données initiales, pas les données saisies ensuite dans chaque installation.
