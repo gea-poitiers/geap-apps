@@ -308,6 +308,11 @@
           "text": "",
           "fieldId": "f_a8d5473b66d740d0bce1",
           "presentation": "paragraph"
+        },
+        {
+          "id": "component_f783d81fe7e44aa89c6d",
+          "type": "separator",
+          "text": ""
         }
       ],
       "filters": [],
@@ -332,7 +337,8 @@
           "component:component_304262894d3744e1b84a",
           "component:component_5f10aca316fb43b4a976",
           "component:component_58d0f7e8717b4aaf8f0c",
-          "component:component_b069bcd6a4e54c2abc03"
+          "component:component_b069bcd6a4e54c2abc03",
+          "component:component_f783d81fe7e44aa89c6d"
         ]
       }
     },
